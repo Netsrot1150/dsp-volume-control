@@ -39,6 +39,18 @@ PAIR4=-6.0    # sub channels 7 + 8
 The COM port is hard-coded near the top of each script (`COM7` / `COM3`). Change it to match your board.
 For X-CONTROL 2, the click positions in `CHANNEL_COORDS` depend on the window layout and may need adjusting.
 
+## Firmware
+
+Arduino sketches in `firmware/`, all producing the `dsi3_control.py` format (`CH1=` … `CH12=`):
+
+| Sketch | Board | What it does |
+|---|---|---|
+| `DSI3_slider` | ESP32 + SSD1306 OLED + rotary encoder | Stand-alone, wired: the knob sets the volume and the board writes `CHn=` lines over USB |
+| `ESP32_dsi3_sender` | ESP32-S3 with AMOLED touch display (FT3168 / SH8601) | Wireless remote: sends main and sub volume to the receiver over ESP-NOW |
+| `Esp32_dsi3_mottagare` | ESP32 | Receiver, plugged into the PC: turns ESP-NOW packets into `CH1–CH10` (main) and `CH11–CH12` (sub) lines |
+
+For the wireless pair, put the receiver's MAC address in `receiverMac` at the top of the sender sketch.
+
 ## Status
 
-These are working scripts from my own setup. The microcontroller firmware isn't included yet.
+These are working scripts from my own setup. The firmware for the `MAIN=` / `PAIR4=` format used by `esx_xcontrol.py` isn't included yet.
